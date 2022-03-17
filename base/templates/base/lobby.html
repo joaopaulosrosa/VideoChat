@@ -27,6 +27,12 @@
 
         <div class="form-field">
 
+          <input type="text" name="name" placeholder="Enter a username..." style="text-transform:uppercase;">
+
+        </div>
+
+        <div class="form-field">
+
           <input type="submit" value="Join Stream">
 
         </div>
@@ -45,6 +51,7 @@
   let handleSubmit = async (e) => {
     e.preventDefault()
     let room = e.target.room.value.toUpperCase()
+    let name = e.target.name.value
 
     let response = await fetch(`/get_token/?channel=${room}`)
     let data = await response.json()
@@ -55,6 +62,7 @@
     sessionStorage.setItem('UID', UID)
     sessionStorage.setItem('token', token)
     sessionStorage.setItem('room', room)
+    sessionStorage.setItem('name', name)
 
     window.open('/room', '_self')
   }
