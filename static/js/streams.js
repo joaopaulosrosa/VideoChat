@@ -79,6 +79,8 @@ let leaveAndRemoveLocalStream = async () => {
 
   await client.leave()
 
+  deleteMember()
+
   window.open('/', '_self')
 }
 
@@ -120,7 +122,20 @@ let getMember = async (user) => {
   return member
 }
 
+let deleteMember = async () => {
+  let response = await fetch('/delete_member/', {
+    method: 'POST',
+    headers:{
+      'Content-Type':'application/json'
+    },
+    body:JSON.stringify({'name':NAME, 'room':CHANNEL, 'UID':UID})
+  })
+}
+
 joinAndDisplayLocalStream()
+
+window.addEventListener('beforeunload', deleteMember)
+
 document.getElementById('leave-btn').addEventListener('click', leaveAndRemoveLocalStream)
 document.getElementById('camera-btn').addEventListener('click', toggleCamera)
 document.getElementById('mic-btn').addEventListener('click', toggleMic)
